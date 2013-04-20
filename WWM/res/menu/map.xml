@@ -1,9 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_ready"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="Ready stations"/>
+    
+    <item
+        android:id="@+id/action_first_order"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="The first plan"/>
+    
+    <item
+        android:id="@+id/action_full_map"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="The full map"/>
 
 </menu>
