@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="library_position">Пересечение улиц Красный Путь и Фрунзе</string>
+    <string name="afterriver_position">Пересечение улиц Конева и 70 лет Октября</string>
+    <string name="crystal_position">Пересечение просп. Комарова и бульв. Архитекторов</string>
+    <string name="cathedral_position">Вдоль просп. Комарова, между автовокзалом и Левобережным рынком</string>
+    
+</resources>

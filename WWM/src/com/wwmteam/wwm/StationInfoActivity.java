@@ -50,12 +50,12 @@ public class StationInfoActivity extends Activity {
 	    tillNextTrain.setText(days + " " + hours);
 	    
 	    
-	    int id = 7;
+	    int id = 8;
 	    
 	    Station station = Station.GetStationById(id);
 	    ((TextView)findViewById(R.id.stationName)).append(this.getResources().getString(station.Name));
 	    
-	    if (station.StationsBefore.length != 0 || station.StationsAfter.length != 0) {
+	    if (station.IsFirstOrder() || station.IaReady()) {
 	    	//station in first order
 	    	findViewById(R.id.predictionArriving).setVisibility(1);
 	    	
@@ -83,8 +83,19 @@ public class StationInfoActivity extends Activity {
 		    	}
 		    }
 		    
-	    } else {
+	    }
+	    
+	    if (station.IsSecondOrder()) {
 	    	findViewById(R.id.stationInSecondOrder).setVisibility(1);
+	    }
+	    
+	    if (station.IsDepot()) {
+	    	findViewById(R.id.depot).setVisibility(1);
+	    }
+	    
+	    if (station.HasAddress()) {
+	    	findViewById(R.id.position_wrapper).setVisibility(1);
+	    	((TextView)findViewById(R.id.position)).append(this.getResources().getString(station.Address));
 	    }
 	}
 

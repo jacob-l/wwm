@@ -16,5 +16,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <color name="remain_time">#EF502D</color>
+    <color name="blue">#0C4C8B</color>
 
 </resources>

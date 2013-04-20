@@ -19,5 +19,7 @@
     <string name="obtain_in_the_next_year">Уточните через годик</string>
     <string name="station">Станция: </string>
     <string name="station_in_second_order">Строительство станции запланировано на вторую очередь</string>
+    <string name="depot">Депо</string>
+    <string name="position">Расположение:</string>
 
 </resources>

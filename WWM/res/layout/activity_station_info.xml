@@ -16,14 +16,57 @@
         android:src="@drawable/suggestive_train"
         android:contentDescription="@string/train_preview" />
 
-    <TextView
-        android:id="@+id/stationName"
-        android:layout_width="wrap_content"
+    <LinearLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/station"
-        android:textIsSelectable="false"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="10dp">
 
+        <TextView
+            android:id="@+id/station"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/station"
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
+        
+        <TextView
+            android:id="@+id/stationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginLeft="4dp" />
+
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/position_wrapper"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/positionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/position"
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
+        
+        <TextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textIsSelectable="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="4dp" />
+
+    </LinearLayout>
+    
     <TextView
         android:id="@+id/stationInSecondOrder"
         android:layout_width="wrap_content"
@@ -31,7 +74,19 @@
         android:text="@string/station_in_second_order"
         android:textIsSelectable="false"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginTop="30dp" />
+    
+    <TextView
+        android:id="@+id/depot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/depot"
+        android:textIsSelectable="false"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:visibility="gone"
+        android:layout_marginTop="30dp"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/firstDirection"
@@ -40,7 +95,9 @@
         android:text="@string/first_direction"
         android:textIsSelectable="false"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:textColor="@color/blue"
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/firstDirectionStations"
@@ -54,12 +111,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone" >
-        
-        <View 
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"       
-            android:background="#000000" />
+        android:visibility="gone"
+        android:background="@drawable/round_corners" >
     
         <TextView
             android:id="@+id/tillNextTrainLabel"
@@ -67,28 +120,27 @@
             android:layout_height="wrap_content"
             android:text="@string/till_next_train"
             android:textIsSelectable="false"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue" />
     
         <TextView
             android:id="@+id/tillNextTrain"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textIsSelectable="false"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="28sp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp" 
+            android:textColor="@color/remain_time"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/preciseInAYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/obtain_in_the_next_year"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <View 
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"       
-            android:background="#000000" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/blue" />
     
     </LinearLayout>
     
@@ -99,7 +151,9 @@
         android:text="@string/second_direction"
         android:textIsSelectable="false"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:textColor="@color/blue"
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:id="@+id/secondDirectionStations"
