@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.widget.TextView;
 import java.util.*;
 
+import com.wwmteam.wwm.beans.Station;
+
 public class StationInfo extends Activity {
 
 	private static final int OPEN_YEAR = 2016;
@@ -19,7 +21,7 @@ public class StationInfo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_station_info);
 		
-		TextView t=(TextView)findViewById(R.id.tillNextTrain);
+		TextView tillNextTrain = (TextView)findViewById(R.id.tillNextTrain);
 		
 		Calendar openDate = Calendar.getInstance();
 	    Calendar now = Calendar.getInstance();
@@ -42,7 +44,45 @@ public class StationInfo extends Activity {
 	    		this.getResources().getString(R.string.hours_part_2),
 	    		this.getResources().getString(R.string.hours_part_3));
 	    
-	    t.setText(days + " " + hours);
+	    tillNextTrain.setText(days + " " + hours);
+	    
+	    
+	    int id = 7;
+	    
+	    Station station = Station.GetStationById(id);
+	    ((TextView)findViewById(R.id.stationName)).append(this.getResources().getString(station.Name));
+	    
+	    if (station.StationsBefore.length != 0 || station.StationsAfter.length != 0) {
+	    	//station in first order
+	    	findViewById(R.id.predictionArriving).setVisibility(1);
+	    	
+	    	if (station.StationsBefore.length != 0) {
+		    	TextView firstDirection = (TextView)findViewById(R.id.firstDirection);
+		    	firstDirection.setVisibility(1);
+		    	
+		    	TextView firstDirectionStations = (TextView)findViewById(R.id.firstDirectionStations);
+		    	for(int i = 0; i < station.StationsBefore.length; i++) {
+		    		Station beforeStatition = Station.GetStationById(station.StationsBefore[i]);
+		    		firstDirectionStations.append(this.getResources().getString(beforeStatition.Name));
+		    		firstDirectionStations.append("\r\n");
+		    	}
+		    }
+		    
+		    if (station.StationsAfter.length != 0) {
+		    	TextView secondDirection = (TextView)findViewById(R.id.secondDirection);
+		    	secondDirection.setVisibility(1);
+		    	
+		    	TextView secondDirectionStations = (TextView)findViewById(R.id.secondDirectionStations);
+		    	for(int i = 0; i < station.StationsAfter.length; i++) {
+		    		Station afterStatition = Station.GetStationById(station.StationsAfter[i]);
+		    		secondDirectionStations.append(this.getResources().getString(afterStatition.Name));
+		    		secondDirectionStations.append("\r\n");
+		    	}
+		    }
+		    
+	    } else {
+	    	findViewById(R.id.stationInSecondOrder).setVisibility(1);
+	    }
 	}
 
 	@Override

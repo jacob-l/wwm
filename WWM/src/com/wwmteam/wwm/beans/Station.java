@@ -1,4 +1,6 @@
-package com.wwmteam.wwm;
+package com.wwmteam.wwm.beans;
+
+import com.wwmteam.wwm.R;
 
 public class Station {
 
@@ -26,8 +28,8 @@ public class Station {
 		new Station(4, R.string.depot_1, -1, new int[0], new int[0]),
 		new Station(5, R.string.cathedral, -1, new int[0], new int[]{ 6, 7, 8 }),
 		new Station(6, R.string.crystal, -1, new int[]{ 5 }, new int[]{ 7, 8 }),
-		new Station(7, R.string.after_river, -1, new int[]{ 5, 6 }, new int[]{ 8 }),
-		new Station(8, R.string.library, -1, new int[]{ 5, 6, 7 }, new int[0]),
+		new Station(7, R.string.after_river, -1, new int[]{ 6, 5 }, new int[]{ 8 }),
+		new Station(8, R.string.library, -1, new int[]{ 7, 6, 5 }, new int[0]),
 		new Station(9, R.string.shop_center, -1, new int[0], new int[0]),
 		new Station(10, R.string.Jukov, -1, new int[0], new int[0]),
 		new Station(11, R.string.lermontovskaya, -1, new int[0], new int[0]),

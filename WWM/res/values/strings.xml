@@ -4,7 +4,7 @@
     <string name="app_name">WWM</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_station_info">StationInfo</string>
+    <string name="title_activity_station_info">Информация о станции</string>
     <string name="train_preview">Поезда</string>
     <string name="first_direction">Направление 1:</string>
     <string name="second_direction">Направление 2:</string>
@@ -17,5 +17,7 @@
     <string name="hours_part_2">а</string>
     <string name="hours_part_3">ов</string>
     <string name="obtain_in_the_next_year">Уточните через годик</string>
+    <string name="station">Станция: </string>
+    <string name="station_in_second_order">Строительство станции запланировано на вторую очередь</string>
 
 </resources>
