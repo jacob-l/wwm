@@ -13,9 +13,10 @@
     <string name="Jukov">Маршала Жукова</string>
     <string name="lermontovskaya">Лермонтовская</string>
     <string name="park">Парковая</string>
-    <string name="Works">Рабочая</string>
+    <string name="works">Рабочая</string>
     <string name="depot_2">ТЧ-2 &quot;Южное&quot;</string>
     <string name="moscow">Московская</string>
     <string name="sibirian_road">Сибирский Проспект</string>
+    <string name="tupolev">Туполевская</string>
     
 </resources>

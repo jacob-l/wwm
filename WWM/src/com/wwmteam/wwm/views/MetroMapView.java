@@ -1,7 +1,6 @@
 package com.wwmteam.wwm.views;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
@@ -18,7 +17,7 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 
 //	protected boolean mScaling;
 	private static final float MIN_SCALE = 1f;
-	private static final float MAX_SCALE = 2f;
+	private static final float MAX_SCALE = 3f;
 	//private static final String TAG = MetroMapView.class.getSimpleName();
 	
 	Matrix matrix = new Matrix();
