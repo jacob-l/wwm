@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="west">Западная</string>
+    <string name="sunny">Солнечная</string>
+    <string name="young">Молодежная</string>
+    <string name="rokossovskogo">Рокоссовского</string>
+    <string name="depot_1">ТЧ-1 &quot;Электродепо&quot;</string>
+    <string name="cathedral">Соборная</string>
+    <string name="crystal">Кристалл</string>
+    <string name="after_river">Заречная</string>
+    <string name="library">Библиотека им. Пушкина</string>
+    <string name="shop_center">Торговый центр</string>
+    <string name="Jukov">Маршала Жукова</string>
+    <string name="lermontovskaya">Лермонтовская</string>
+    <string name="park">Парковая</string>
+    <string name="Works">Рабочая</string>
+    <string name="depot_2">ТЧ-2 &quot;Южное&quot;</string>
+    <string name="moscow">Московская</string>
+    <string name="sibirian_road">Сибирский Проспект</string>
+    
+</resources>
