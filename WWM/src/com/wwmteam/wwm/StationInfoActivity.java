@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.widget.TextView;
 import java.util.*;
 
-public class StationInfo extends Activity {
+public class StationInfoActivity extends Activity {
 
 	private static final int OPEN_YEAR = 2016;
 	private static final int OPEN_MONTH = 7;
