@@ -1,8 +1,10 @@
 package com.wwmteam.wwm.views;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
 
 import com.wwmteam.wwm.R;
+import com.wwmteam.wwm.utils.WWMUtils;
 
 public class MetroMapView extends ImageView implements /*GestureDetector.OnGestureListener,*/
 								ScaleGestureDetector.OnScaleGestureListener {
@@ -18,6 +21,8 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 //	protected boolean mScaling;
 	private static final float MIN_SCALE = 1f;
 	private static final float MAX_SCALE = 3f;
+	
+	private static final float INITIAL_WIDTH = 500f;
 	//private static final String TAG = MetroMapView.class.getSimpleName();
 	
 	Matrix matrix = new Matrix();
@@ -45,6 +50,9 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	private ScaleGestureDetector mScaleDetector;
 	
 	private Context mContext;
+	
+	protected final RectF firstRect = new RectF(0, 0, 500, 110);//pixels on initial sizes
+	protected RectF currentFirstRect = firstRect;
 
 	public MetroMapView(Context context) {
 		super(context);
@@ -71,8 +79,9 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	}
 	protected void initView() {
 		setImageResource(R.drawable.map);
+		//setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_bright));
 		setClickable(true);
-		matrix.setTranslate(100f, 500f);
+		matrix.setTranslate(1f, 1f);
 	    m = new float[9];
 	    setImageMatrix(matrix);
 	    setScaleType(ScaleType.MATRIX);
@@ -80,8 +89,6 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		mScaleDetector.onTouchEvent(event);
-
 		mScaleDetector.onTouchEvent(event);
         PointF curr = new PointF(event.getX(), event.getY());
 
@@ -108,8 +115,11 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
                 mode = NONE;
                 int xDiff = (int) Math.abs(curr.x - start.x);
                 int yDiff = (int) Math.abs(curr.y - start.y);
-                if (xDiff < CLICK && yDiff < CLICK)
-                    performClick();
+                if (xDiff < CLICK && yDiff < CLICK) {
+                	performClick();
+                	onClick(event);
+                }
+                    
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -122,6 +132,32 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
         return true; // indicate event was handled
     }
 	
+	protected void onClick(MotionEvent event) {
+		matrix.getValues(m);
+        float transX = m[Matrix.MTRANS_X];
+        float transY = m[Matrix.MTRANS_Y];
+		final float scale = (origWidth/INITIAL_WIDTH)*saveScale;
+		currentFirstRect = new RectF(transX + firstRect.left*scale, transY + firstRect.top*scale,
+					transX + firstRect.right*scale, transY + firstRect.bottom*scale);
+		if (WWMUtils.isPointIntoRect(new PointF(event.getX(), event.getY()), currentFirstRect)){
+			//Toast.makeText(mContext, "Западная ", Toast.LENGTH_SHORT).show();
+			onClickToStation(0);
+		}
+		
+	}
+	
+	protected void onClickToStation(int stationId){
+	}
+	
+	protected static final int HOTSPOT_COLOR_GRAY = 0x77000000;
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		//canvas.drawRect(currentFirstRect, new Paint(HOTSPOT_COLOR_GRAY));
+	}
+	
+
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
 		float mScaleFactor = detector.getScaleFactor();
@@ -162,19 +198,11 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 		super.onLayout(changed, left, top, right, bottom);
 	}
 	
-	/*@Override
-	public void setImageBitmap(Bitmap bm) {
-		super.setImageBitmap(bm);
-		bmWidth = bm.getWidth();
-	    bmHeight = bm.getHeight();
-	}*/
-	
 	@Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         viewWidth = MeasureSpec.getSize(widthMeasureSpec);
         viewHeight = MeasureSpec.getSize(heightMeasureSpec);
-        
         //
         // Rescales image on rotation
         //
@@ -224,8 +252,9 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
         float fixTransX = getFixTrans(transX, viewWidth, origWidth * saveScale);
         float fixTransY = getFixTrans(transY, viewHeight, origHeight * saveScale);
 
-        if (fixTransX != 0 || fixTransY != 0)
-            matrix.postTranslate(fixTransX, fixTransY);
+        if (fixTransX != 0 || fixTransY != 0){
+        	matrix.postTranslate(fixTransX, fixTransY);
+        }
     }
 
     float getFixTrans(float trans, float viewSize, float contentSize) {
