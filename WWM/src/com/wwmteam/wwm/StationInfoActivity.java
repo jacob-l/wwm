@@ -12,6 +12,7 @@ import com.wwmteam.wwm.beans.Station;
 
 public class StationInfoActivity extends Activity {
 
+	public static final String TAG_STATION_ID = "tag_station_id";
 
 	private static final int OPEN_YEAR = 2016;
 	private static final int OPEN_MONTH = 7;
@@ -50,7 +51,7 @@ public class StationInfoActivity extends Activity {
 	    tillNextTrain.setText(days + " " + hours);
 	    
 	    
-	    int id = 8;
+	    final int id = getIntent().getIntExtra(TAG_STATION_ID, 8);
 	    
 	    Station station = Station.GetStationById(id);
 	    ((TextView)findViewById(R.id.stationName)).append(this.getResources().getString(station.Name));
@@ -102,7 +103,7 @@ public class StationInfoActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.station_info, menu);
+		//getMenuInflater().inflate(R.menu.station_info, menu);
 		return true;
 	}
 	
