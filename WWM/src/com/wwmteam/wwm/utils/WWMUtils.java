@@ -24,13 +24,22 @@ public class WWMUtils {
 	public static final RectF st_0_16 = new RectF(200, 1300, 450, 1350);
 	public static final RectF st_0_17 = new RectF(20, 1350, 250, 1440);
 	
+	public static RectF[] full_map_areas = {st_0_0, st_0_1, st_0_2,
+					st_0_3, st_0_4, st_0_5, st_0_6, st_0_7, st_0_8,
+					st_0_9, st_0_10, st_0_11, st_0_12, st_0_13, st_0_14,
+					st_0_15, st_0_16, st_0_17};
+	
 	public static final RectF st_1_0 = new RectF(270, 340, 498, 430);
 	public static final RectF st_1_1 = new RectF(40, 390, 250, 460);
 	public static final RectF st_1_2 = new RectF(200, 460, 400, 530);
 	public static final RectF st_1_3 = new RectF(50, 530, 250, 590);
 	public static final RectF st_1_4 = new RectF(200, 660, 450, 740);
 	
+	public static RectF[] first_order_areas = { st_1_0, st_1_1, st_1_2, st_1_3, st_1_4};
+	
 	public static final RectF st_2_0 = new RectF(200, 660, 450, 740);
+	
+	public static RectF[] ready_areas = { st_2_0 };
 	
 	public static boolean isPointIntoRect(PointF point, RectF rect) {
 		if (point.x < rect.right && point.x > rect.left && point.y > rect.top

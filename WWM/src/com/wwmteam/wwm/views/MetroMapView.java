@@ -1,9 +1,7 @@
 package com.wwmteam.wwm.views;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -17,17 +15,16 @@ import com.wwmteam.wwm.R;
 import com.wwmteam.wwm.beans.Map;
 import com.wwmteam.wwm.utils.WWMUtils;
 
-public class MetroMapView extends ImageView implements /*GestureDetector.OnGestureListener,*/
-								ScaleGestureDetector.OnScaleGestureListener {
+public class MetroMapView extends ImageView implements ScaleGestureDetector.OnScaleGestureListener {
 
 	private static final float MIN_SCALE = 1f;
-	private static final float MAX_SCALE = 3f;
+	private static final float MAX_SCALE = 4f;
 	
 	private static final float INITIAL_WIDTH = 500f;
-	private static final String TAG = MetroMapView.class.getSimpleName();
+	//private static final String TAG = MetroMapView.class.getSimpleName();
 	
 	Matrix matrix = new Matrix();
-	protected int mMapId = 0;
+	protected Map mMap;
 
 	// We can be in one of these 3 states
     static final int NONE = 0;
@@ -51,44 +48,38 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	
 	private ScaleGestureDetector mScaleDetector;
 	
-	private Context mContext;
+	//private Context mContext;
 	
-	protected final RectF firstRect = new RectF(200, 50, 400, 115);//pixels on initial sizes
-	protected final RectF secondRect = new RectF(40, 115, 250, 180);
-	protected RectF currentFirstRect = firstRect;
-	protected RectF currentSecondRect = secondRect;
-
+	protected RectF[] currentAreas;
+	
 	public MetroMapView(Context context) {
 		super(context);
 		mScaleDetector = new ScaleGestureDetector(context, this);
-		mContext = context;
+		//mContext = context;
 		initView();
 	}
 
 	public MetroMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mScaleDetector = new ScaleGestureDetector(context, this);
-		mContext = context;
+		//mContext = context;
 		initView();
 	}
 
 	public MetroMapView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mScaleDetector = new ScaleGestureDetector(context, this);
-		mContext = context;
+		//mContext = context;
 		initView();
 	}
 	
 	public void setMap(Map map) {
-		this.mMapId = map.id;
+		this.mMap = map;
 		setImage();
+		setClickAreas();
 		invalidate();
-		//initView();
 	}
 	protected void initView() {
-		//setImageResource(R.drawable.map);
-		setImage();
-		//setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_bright));
 		setClickable(true);
 		matrix.setTranslate(1f, 1f);
 	    m = new float[9];
@@ -96,9 +87,14 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	    setScaleType(ScaleType.MATRIX);
 	}
 	
+	protected void setClickAreas() {
+		currentAreas = null;
+		currentAreas = new RectF[mMap.clickAreas.length];
+	}
+	
 	protected void setImage() {
 		int resId = R.drawable.map;
-		switch(mMapId) {
+		switch(mMap.id) {
 		case 0:
 		default:
 			resId = R.drawable.map;
@@ -163,17 +159,23 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
         float transX = m[Matrix.MTRANS_X];
         float transY = m[Matrix.MTRANS_Y];
 		final float scale = (origWidth/INITIAL_WIDTH)*saveScale;
-		currentFirstRect = new RectF(transX + firstRect.left*scale, transY + firstRect.top*scale,
-					transX + firstRect.right*scale, transY + firstRect.bottom*scale);
-		currentSecondRect = new RectF(transX + secondRect.left*scale, transY + secondRect.top*scale,
-				transX + secondRect.right*scale, transY + secondRect.bottom*scale);
-	
-		if (WWMUtils.isPointIntoRect(new PointF(event.getX(), event.getY()), currentFirstRect)){
-			onClickToStation(0);
-		} else if (WWMUtils.isPointIntoRect(new PointF(event.getX(), event.getY()), currentSecondRect)) {
-			onClickToStation(1);
-		}
 		
+		scaleClickAreas(transX, transY, scale);
+		for (int i = 0; i < currentAreas.length; i++) {
+			if (WWMUtils.isPointIntoRect(new PointF(event.getX(), event.getY()), currentAreas[i])){
+				onClickToStation(i+mMap.offset);
+			}
+		}
+	}
+	
+	protected void scaleClickAreas(float transX, float transY, float scale) {
+		if (mMap != null) {
+			for (int i = 0; i < mMap.clickAreas.length; i++) {
+				currentAreas[i] = new RectF(transX + mMap.clickAreas[i].left*scale, transY + mMap.clickAreas[i].top*scale,
+						transX + mMap.clickAreas[i].right*scale, transY + mMap.clickAreas[i].bottom*scale);
+			
+			}
+		}
 	}
 	
 	protected void onClickToStation(int stationId){
@@ -181,14 +183,6 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	
 	protected static final int HOTSPOT_COLOR_GRAY = 0xBB000000;
 	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		canvas.drawRect(currentFirstRect, new Paint(HOTSPOT_COLOR_GRAY));
-		canvas.drawRect(currentSecondRect, new Paint(HOTSPOT_COLOR_GRAY));
-	}
-	
-
 	@Override
 	public boolean onScale(ScaleGestureDetector detector) {
 		float mScaleFactor = detector.getScaleFactor();
