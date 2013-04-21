@@ -51,7 +51,7 @@ public class StationInfoActivity extends Activity {
 	    tillNextTrain.setText(days + " " + hours);
 	    
 	    
-	    final int id = getIntent().getIntExtra(TAG_STATION_ID, 8);
+	    final int id = 7;//getIntent().getIntExtra(TAG_STATION_ID, 8);
 	    
 	    Station station = Station.GetStationById(id);
 	    ((TextView)findViewById(R.id.stationName)).append(this.getResources().getString(station.Name));
