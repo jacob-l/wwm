@@ -1,14 +1,19 @@
 package com.wwmteam.wwm;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.Menu;
+import android.os.Vibrator;
 import android.widget.TextView;
 
 import com.wwmteam.wwm.beans.Station;
+import com.wwmteam.wwm.utils.ShakeListener;
 
 public class StationInfoActivity extends Activity {
 
@@ -20,10 +25,15 @@ public class StationInfoActivity extends Activity {
 	private static final int OPEN_HOUR = 12;
 	private static final int OPEN_MINUTE = 0;
 	
+	private ShakeListener mShaker;
+	private MediaPlayer mPlayer = new MediaPlayer();;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_station_info);
+		
+		initializeShaker();
 		
 		TextView tillNextTrain = (TextView)findViewById(R.id.tillNextTrain);
 		
@@ -100,13 +110,6 @@ public class StationInfoActivity extends Activity {
 	    }
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.station_info, menu);
-		return true;
-	}
-	
 	public String getPluralNumber(long count, String arg1, String arg2, String arg3, String arg4) {
 	    String result = arg1;
 	    long last_digit = count % 10;
@@ -120,5 +123,44 @@ public class StationInfoActivity extends Activity {
 	        result += arg4;
 	    return result;
 	}
+	
+	protected void initializeShaker() {
+		final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+		mShaker = new ShakeListener(this);
+		mShaker.setOnShakeListener(new ShakeListener.OnShakeListener() {
+			public void onShake() {
+				vibe.vibrate(100);
+				try {
+					AssetFileDescriptor afd;
+					afd = getAssets().openFd("metro_prib.mp3");
+					mPlayer.setDataSource(afd.getFileDescriptor(),
+							afd.getStartOffset(), afd.getLength());
+					mPlayer.prepare();
+					mPlayer.start();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	
+			}
+		});
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		mShaker.pause();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (mPlayer != null && mPlayer.isPlaying()) {
+			mPlayer.stop();	
+		}
+	}
 }
