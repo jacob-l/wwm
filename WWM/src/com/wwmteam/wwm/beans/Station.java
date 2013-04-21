@@ -63,7 +63,7 @@ public class Station {
 		new Station(12, R.string.park, -1, SECOND_ORDER, new int[0], new int[0]),
 		new Station(13, R.string.tupolev, -1, SECOND_ORDER, new int[0], new int[0]),
 		new Station(14, R.string.works, -1, SECOND_ORDER, new int[0], new int[0]),
-		new Station(15, R.string.depot_2, -1, SECOND_ORDER, new int[0], new int[0]),
+		new Station(15, R.string.depot_2, -1, DEPOT, new int[0], new int[0]),
 		new Station(16, R.string.moscow, -1, SECOND_ORDER, new int[0], new int[0]),
 		new Station(17, R.string.sibirian_road, -1, SECOND_ORDER, new int[0], new int[0])
 	};
