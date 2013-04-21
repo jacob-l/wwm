@@ -4,18 +4,18 @@
         android:id="@+id/action_ready"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="Ready stations"/>
+        android:title="Готовые станции"/>
     
     <item
         android:id="@+id/action_first_order"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="The first plan"/>
+        android:title="Первая очередь"/>
     
     <item
         android:id="@+id/action_full_map"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="The full map"/>
+        android:title="Полная карта"/>
 
 </menu>

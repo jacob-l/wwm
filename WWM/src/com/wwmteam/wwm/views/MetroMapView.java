@@ -14,6 +14,7 @@ import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
 
 import com.wwmteam.wwm.R;
+import com.wwmteam.wwm.beans.Map;
 import com.wwmteam.wwm.utils.WWMUtils;
 
 public class MetroMapView extends ImageView implements /*GestureDetector.OnGestureListener,*/
@@ -26,6 +27,7 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	private static final String TAG = MetroMapView.class.getSimpleName();
 	
 	Matrix matrix = new Matrix();
+	protected int mMapId = 0;
 
 	// We can be in one of these 3 states
     static final int NONE = 0;
@@ -76,14 +78,39 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 		mContext = context;
 		initView();
 	}
+	
+	public void setMap(Map map) {
+		this.mMapId = map.id;
+		setImage();
+		invalidate();
+		//initView();
+	}
 	protected void initView() {
-		setImageResource(R.drawable.map);
+		//setImageResource(R.drawable.map);
+		setImage();
 		//setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_bright));
 		setClickable(true);
 		matrix.setTranslate(1f, 1f);
 	    m = new float[9];
 	    setImageMatrix(matrix);
 	    setScaleType(ScaleType.MATRIX);
+	}
+	
+	protected void setImage() {
+		int resId = R.drawable.map;
+		switch(mMapId) {
+		case 0:
+		default:
+			resId = R.drawable.map;
+			break;
+		case 1:
+			resId = R.drawable.first_order;
+			break;
+		case 2:
+			resId = R.drawable.ready_stations;
+			break;
+		}
+		setImageResource(resId);
 	}
 	
 	@Override
@@ -186,7 +213,6 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 
 	@Override
 	public boolean onScaleBegin(ScaleGestureDetector arg0) {
-		//mScaling = true;
 		mode = ZOOM;
 		return true;
 	}
