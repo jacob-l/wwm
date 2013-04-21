@@ -26,6 +26,7 @@ public class MapActivity extends Activity {
 			}
 		};
 		mMetroMapView.setMap(new Map(0));
+		setTitle(getResources().getString(R.string.full_map));
 		final FrameLayout layout = new FrameLayout(this);
 		final FrameLayout.LayoutParams COVER_SCREEN_GRAVITY_CENTER = new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
@@ -54,12 +55,15 @@ public class MapActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.action_first_order:
 			mMetroMapView.setMap(new Map(1));
+			setTitle(getResources().getString(R.string.first_order));
 			return true;
 		case R.id.action_full_map:
 			mMetroMapView.setMap(new Map(0));
+			setTitle(getResources().getString(R.string.full_map));
 			return true;
 		case R.id.action_ready:
 			mMetroMapView.setMap(new Map(2));
+			setTitle(getResources().getString(R.string.ready_stations));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
