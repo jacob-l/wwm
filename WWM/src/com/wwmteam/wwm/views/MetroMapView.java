@@ -3,6 +3,7 @@ package com.wwmteam.wwm.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -18,12 +19,11 @@ import com.wwmteam.wwm.utils.WWMUtils;
 public class MetroMapView extends ImageView implements /*GestureDetector.OnGestureListener,*/
 								ScaleGestureDetector.OnScaleGestureListener {
 
-//	protected boolean mScaling;
 	private static final float MIN_SCALE = 1f;
 	private static final float MAX_SCALE = 3f;
 	
 	private static final float INITIAL_WIDTH = 500f;
-	//private static final String TAG = MetroMapView.class.getSimpleName();
+	private static final String TAG = MetroMapView.class.getSimpleName();
 	
 	Matrix matrix = new Matrix();
 
@@ -51,12 +51,13 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	
 	private Context mContext;
 	
-	protected final RectF firstRect = new RectF(0, 0, 500, 110);//pixels on initial sizes
+	protected final RectF firstRect = new RectF(200, 50, 400, 115);//pixels on initial sizes
+	protected final RectF secondRect = new RectF(40, 115, 250, 180);
 	protected RectF currentFirstRect = firstRect;
+	protected RectF currentSecondRect = secondRect;
 
 	public MetroMapView(Context context) {
 		super(context);
-		//mGestureDetector = new GestureDetector(this);
 		mScaleDetector = new ScaleGestureDetector(context, this);
 		mContext = context;
 		initView();
@@ -64,7 +65,6 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 
 	public MetroMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		//mGestureDetector = new GestureDetector(this);
 		mScaleDetector = new ScaleGestureDetector(context, this);
 		mContext = context;
 		initView();
@@ -72,7 +72,6 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 
 	public MetroMapView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		//mGestureDetector = new GestureDetector(this);
 		mScaleDetector = new ScaleGestureDetector(context, this);
 		mContext = context;
 		initView();
@@ -139,9 +138,13 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 		final float scale = (origWidth/INITIAL_WIDTH)*saveScale;
 		currentFirstRect = new RectF(transX + firstRect.left*scale, transY + firstRect.top*scale,
 					transX + firstRect.right*scale, transY + firstRect.bottom*scale);
+		currentSecondRect = new RectF(transX + secondRect.left*scale, transY + secondRect.top*scale,
+				transX + secondRect.right*scale, transY + secondRect.bottom*scale);
+	
 		if (WWMUtils.isPointIntoRect(new PointF(event.getX(), event.getY()), currentFirstRect)){
-			//Toast.makeText(mContext, "Западная ", Toast.LENGTH_SHORT).show();
 			onClickToStation(0);
+		} else if (WWMUtils.isPointIntoRect(new PointF(event.getX(), event.getY()), currentSecondRect)) {
+			onClickToStation(1);
 		}
 		
 	}
@@ -149,12 +152,13 @@ public class MetroMapView extends ImageView implements /*GestureDetector.OnGestu
 	protected void onClickToStation(int stationId){
 	}
 	
-	protected static final int HOTSPOT_COLOR_GRAY = 0x77000000;
+	protected static final int HOTSPOT_COLOR_GRAY = 0xBB000000;
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		//canvas.drawRect(currentFirstRect, new Paint(HOTSPOT_COLOR_GRAY));
+		canvas.drawRect(currentFirstRect, new Paint(HOTSPOT_COLOR_GRAY));
+		canvas.drawRect(currentSecondRect, new Paint(HOTSPOT_COLOR_GRAY));
 	}
 	
 
