@@ -21,5 +21,8 @@
     <string name="station_in_second_order">Строительство станции запланировано на вторую очередь</string>
     <string name="depot">Депо</string>
     <string name="position">Расположение:</string>
+    <string name="ready_stations">Готовые станции</string>
+    <string name="first_order"> Первая очередь</string>
+    <string name="full_map">Полная карта</string>
 
 </resources>
